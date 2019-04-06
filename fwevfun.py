@@ -5,9 +5,9 @@ V = 1.6e-18      # volts
 m = 9.11e-31     # kilograms
 hbar = 1.0546e-34
 
-alpha = 0.0000001
-delta = 0.0000001
-h = 1.0e-13
+alpha = 0.02
+delta = 0.0000000001
+h = 1.0e-14
 u = 0.0
 root=0
 
@@ -15,7 +15,7 @@ firstrun = True
 evenfunction = True
 
 # Here we start a big loop to search for roots/solutions
-while (alpha < 1.0):
+while (alpha < 0.03):
    x = 0.0
    oldu = 0.0 
    u = 0.0
@@ -65,6 +65,7 @@ while (alpha < 1.0):
 
            u=0.0
            x=0.0
+           oldu=-h/width
 
            filehandle.write(str(u) + " " + str(psi) + "\n");
 
@@ -77,9 +78,9 @@ while (alpha < 1.0):
               else:
                  c = - 2 * m * width**2 * V * alpha / hbar**2
            
-              filehandle.write(str(u) + " " + str(psi) + "\n");
               dpsi = dpsi + c * psi * du
               psi = psi + dpsi * du
+              filehandle.write(str(u) + " " + str(psi) + "\n");
              
               oldu = u
 
@@ -87,7 +88,8 @@ while (alpha < 1.0):
 
            firstrun = True
            evenfunction = not evenfunction
-           
+   
+#   print "Checking alpha = " + str(alpha)        
    alpha = alpha + delta
 
 

@@ -59,7 +59,6 @@ while (alpha < 0.03):
 
           # improve the solution
            iteration = 0
-           oldpsi = -psi
            while (iteration < 10):
              oldalpha = alpha
              alpha = alpha - delta 
@@ -77,6 +76,8 @@ while (alpha < 0.03):
 
 # The next loop propagates the solution of the funtion to u=2 
                 u = 0.0
+                x = 0.0
+                oldu = 0.0 
                 while ( u < 2.0 ):
                    x = x + h
                    u = x / width
@@ -93,6 +94,7 @@ while (alpha < 0.03):
                 if ((psi * oldpsi) < 0 ):
                    solutionFound = True
                    iteration = iteration + 1 
+                   oldpsi = psi
                    print( "improved alpha is %18.16f on iteration %i"  % (alpha, iteration)) 
 
            if ( evenfunction ):

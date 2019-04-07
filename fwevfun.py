@@ -5,21 +5,22 @@ V = 1.6e-18      # volts
 m = 9.11e-31     # kilograms
 hbar = 1.0546e-34
 
-alpha = 0.029
-h = 1.0e-14
+alpha = 0.0
+h = 1.0e-15
 u = 0.0
 root=0
+
 
 firstrun = True
 evenfunction = True
 
 # Here we start a big loop to search for roots/solutions
-while (alpha < 0.03):
+while (alpha < 1.0):
    x = 0.0
    oldu = 0.0 
    u = 0.0
    delta = 0.0001
-
+   olddelta = delta
 # Based on the odd/even nature of solution, set initial psi and dpsi
    if ( evenfunction ):
        psi = 1.0
@@ -51,7 +52,7 @@ while (alpha < 0.03):
    else:
 # if the oldpsi and the new psi are different, we found a solution
        if ( (psi * oldpsi) < 0.0 ):
-           print ("*** FOUND   SOLUTION  ***,  alpha =  %18.16f", alpha)
+           print ("*** FOUND INITIAL  SOLUTION  ***,  alpha =  %18.16f" % alpha)
            # Now put the wavefunction data in a file
            root = root + 1
            filename = "wavefunction_" + str(root) + ".dat"
@@ -59,11 +60,12 @@ while (alpha < 0.03):
 
           # improve the solution
            iteration = 0
+           oldalpha = alpha
+           olddelta = delta
            while (iteration < 10):
-             oldalpha = alpha
-             alpha = alpha - delta 
+             alpha = alpha - 1.5 * delta 
              delta = delta / 10             
-             print ("==== current alpha is %18.16f", alpha)
+             #print ("   current alpha is %18.16f" % alpha)
              solutionFound = False
              while ( not solutionFound  ):
                 alpha = alpha + delta;
@@ -78,7 +80,7 @@ while (alpha < 0.03):
                 u = 0.0
                 x = 0.0
                 oldu = 0.0 
-                while ( u < 2.0 ):
+                while ( u < 2.0):
                    x = x + h
                    u = x / width
                    du = u - oldu
@@ -95,7 +97,7 @@ while (alpha < 0.03):
                    solutionFound = True
                    iteration = iteration + 1 
                    oldpsi = psi
-                   print( "improved alpha is %18.16f on iteration %i"  % (alpha, iteration)) 
+                   print( "    -->  improved alpha is %18.13f on iteration %i"  % (alpha, iteration)) 
 
            if ( evenfunction ):
               psi = 1.0
@@ -110,6 +112,7 @@ while (alpha < 0.03):
 
            filehandle.write(str(u) + " " + str(psi) + "\n");
 
+           print "using alpha = " + str(alpha) + " to generate wavefunction plot"
            while ( u < 2.0 ):
               x = x + h
               u = x / width
@@ -131,6 +134,6 @@ while (alpha < 0.03):
            evenfunction = not evenfunction
    
    print "Checking alpha = " + str(alpha)        
-   alpha = alpha + delta
+   alpha = alpha + olddelta
 
 

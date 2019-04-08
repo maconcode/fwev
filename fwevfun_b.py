@@ -33,12 +33,41 @@ def psiAtTwoU( width, V, h, alpha, evenfunction ):
        oldu = u
    return psi
 
+def psiAtU( uval, width, V, h, alpha, evenfunction ):
+
+
+# Based on the odd/even nature of solution, set initial psi and dpsi
+   if ( evenfunction ):
+       psi = 1.0
+       dpsi = 0.0
+   else:
+       psi = 0.0
+       dpsi = 1.0
+
+   x = 0.0
+   oldu = 0.0
+#   oldu = -h/width
+   u = 0.0
+# The next loop propagates the solution of the funtion to u=2 
+   while ( u < uval ):
+       x = x + h
+       u = x / width
+       du = u - oldu
+       if ( abs(u) > 0.5 ):
+           c = 2 * m * width**2 * V * (1.0 - alpha) / hbar**2
+       else:
+           c = - 2 * m * width**2 * V * alpha / hbar**2
+           
+       dpsi = dpsi + c * psi * du
+       psi = psi + dpsi * du
+       oldu = u
+   return psi
    
 width = 1.0e-9   # meters
 V = 1.6e-18      # volts
 
 alpha = 0.0
-h = 1.0e-14
+h = 1.0e-15
 u = 0.0
 root=0
 
@@ -71,7 +100,7 @@ while (alpha < 1.0):
 # for each new alpha tested
 
    if ( firstrun ):
-       oldpsi = psi 
+       oldpsi = psiAtTwoU( width, V, h, alpha, evenfunction )
        firstrun = False
        oldalpha = alpha
    else:
@@ -89,7 +118,7 @@ while (alpha < 1.0):
         
            iteration = 0 
            bisecth = h / 10
-           while ( abs(psi) > 0.0001 ):
+           while ( abs(psi) > 0.000001 ):
               iteration = iteration + 1
               half = (A+B)/2
               test = psiAtTwoU( width, V, bisecth, half, evenfunction )

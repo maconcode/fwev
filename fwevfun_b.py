@@ -15,7 +15,8 @@ def psiAtTwoU( width, V, h, alpha, evenfunction ):
        dpsi = 1.0
 
    x = 0.0
-   oldu = -h/width
+   oldu = 0.0
+#   oldu = -h/width
    u = 0.0
 # The next loop propagates the solution of the funtion to u=2 
    while ( u < 2.0 ):
@@ -57,13 +58,20 @@ while (alpha < 1.0):
    delta = 0.001
    olddelta = delta
 
+   if ( evenfunction ):
+       psi = 1.0
+       dpsi = 0.0
+   else:
+       psi = 0.0
+       dpsi = 1.0
+
 
  
 # Store the value of psi for the first time through the while loop
 # for each new alpha tested
 
    if ( firstrun ):
-       oldpsi = psiAtTwoU( width, V, h, alpha, evenfunction ) 
+       oldpsi = psi 
        firstrun = False
        oldalpha = alpha
    else:
@@ -81,7 +89,7 @@ while (alpha < 1.0):
         
            iteration = 0 
            bisecth = h / 10
-           while ( abs(psi) > 0.01 ):
+           while ( abs(psi) > 0.0001 ):
               iteration = iteration + 1
               half = (A+B)/2
               test = psiAtTwoU( width, V, bisecth, half, evenfunction )
@@ -95,7 +103,7 @@ while (alpha < 1.0):
               
               alpha = (A+B)/2 
               psi = psiAtTwoU( width, V, bisecth, alpha, evenfunction )
-              print( "    -->  improved alpha is %18.13f on iteration %i with psi = %f"  % (alpha, iteration, psi))
+              print( "    -->  improved alpha is %18.16f on iteration %i with psi = %f"  % (alpha, iteration, psi))
               
 
            # Now put the wavefunction data in a file

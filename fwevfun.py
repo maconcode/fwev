@@ -17,6 +17,7 @@ evenfunction = True
 oldalpha = 0.0 
 psi = 0.0
 dpsi = 0.0
+startAlpha = alpha
 
 # Here we start a big loop to search for roots/solutions
 while (alpha < 0.04):
@@ -69,7 +70,7 @@ while (alpha < 0.04):
            olddelta = delta
            newh = h
            while (iteration < 15):
-             alpha = alpha - 10*delta 
+             alpha = startAlpha 
              delta = delta / 10             
              #print ("   current alpha is %18.16f" % alpha)
              solutionFound = False
@@ -141,6 +142,8 @@ while (alpha < 0.04):
 
            firstrun = True
            evenfunction = not evenfunction
+       else:
+           startAlpha = alpha
    
    print "Checking alpha = " + str(alpha)        
    alpha = alpha + delta

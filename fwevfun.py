@@ -6,7 +6,7 @@ m = 9.11e-31     # kilograms
 hbar = 1.0546e-34
 
 alpha = 0.0
-h = 1.0e-15
+h = 1.0e-14
 u = 0.0
 root=0
 
@@ -19,7 +19,7 @@ while (alpha < 1.0):
    x = 0.0
    oldu = 0.0 
    u = 0.0
-   delta = 0.0001
+   delta = 0.01
    olddelta = delta
 # Based on the odd/even nature of solution, set initial psi and dpsi
    if ( evenfunction ):

@@ -36,7 +36,7 @@ def psiAtTwoU( width, V, h, alpha, evenfunction ):
 width = 1.0e-9   # meters
 V = 1.6e-18      # volts
 
-alpha = 0.02
+alpha = 0.0
 h = 1.0e-14
 u = 0.0
 root=0
@@ -50,7 +50,7 @@ dpsi = 0.0
 startAlpha = alpha
 
 # Here we start a big loop to search for roots/solutions
-while (alpha < 0.04):
+while (alpha < 1.0):
    x = 0.0
    oldu = 0.0 
    u = 0.0
@@ -80,10 +80,11 @@ while (alpha < 0.04):
            fatB = psi
         
            iteration = 0 
+           bisecth = h / 10
            while ( abs(psi) > 0.01 ):
               iteration = iteration + 1
               half = (A+B)/2
-              test = psiAtTwoU( width, V, h/10, half, evenfunction )
+              test = psiAtTwoU( width, V, bisecth, half, evenfunction )
 
               if ( test*fatA < 0.0):
                  B = half 
@@ -93,7 +94,7 @@ while (alpha < 0.04):
                  fatA = test
               
               alpha = (A+B)/2 
-              psi = psiAtTwoU( width, V, h/10, alpha, evenfunction )
+              psi = psiAtTwoU( width, V, bisecth, alpha, evenfunction )
               print( "    -->  improved alpha is %18.13f on iteration %i with psi = %f"  % (alpha, iteration, psi))
               
 

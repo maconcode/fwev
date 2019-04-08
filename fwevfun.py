@@ -5,6 +5,8 @@ hbar = 1.0546e-34
 
 def psiAtTwoU( width, V, h, alpha, evenfunction ):
 
+   psi = 0.0    # I think these have to be here so things scope properly
+   dpsi = 0.0
 
 # Based on the odd/even nature of solution, set initial psi and dpsi
    if ( evenfunction ):
@@ -15,8 +17,8 @@ def psiAtTwoU( width, V, h, alpha, evenfunction ):
        dpsi = 1.0
 
    x = 0.0
-   oldu = 0.0
-#   oldu = -h/width
+#   oldu = 0.0
+   oldu = h/width
    u = 0.0
 # The next loop propagates the solution of the funtion to u=2 
    while ( u < 2.0 ):
@@ -33,36 +35,6 @@ def psiAtTwoU( width, V, h, alpha, evenfunction ):
        oldu = u
    return psi
 
-def psiAtU( uval, width, V, h, alpha, evenfunction ):
-
-
-# Based on the odd/even nature of solution, set initial psi and dpsi
-   if ( evenfunction ):
-       psi = 1.0
-       dpsi = 0.0
-   else:
-       psi = 0.0
-       dpsi = 1.0
-
-   x = 0.0
-   oldu = 0.0
-#   oldu = -h/width
-   u = 0.0
-# The next loop propagates the solution of the funtion to u=2 
-   while ( u < uval ):
-       x = x + h
-       u = x / width
-       du = u - oldu
-       if ( abs(u) > 0.5 ):
-           c = 2 * m * width**2 * V * (1.0 - alpha) / hbar**2
-       else:
-           c = - 2 * m * width**2 * V * alpha / hbar**2
-           
-       dpsi = dpsi + c * psi * du
-       psi = psi + dpsi * du
-       oldu = u
-   return psi
-   
 width = 1.0e-9   # meters
 V = 1.6e-18      # volts
 

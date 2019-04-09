@@ -92,8 +92,8 @@ while (alpha < 1.0):
            fatB = psi
         
            iteration = 0 
-           bisecth = h / 10
-           while ( abs(psi) > 0.00001 and iteration < 128 ):
+           bisecth = h / 100
+           while ( abs(psi) > 0.00001 and iteration < 65 ):
               iteration = iteration + 1
               half = (A+B)/2
               test = psiAtTwoU( width, V, bisecth, half, evenfunction )
@@ -109,7 +109,7 @@ while (alpha < 1.0):
               psi = psiAtTwoU( width, V, bisecth, alpha, evenfunction )
               print( "    -->  improved alpha is %18.16f on iteration %i with psi = %f"  % (alpha, iteration, psi))
              
-           if ( iteration == 128 ):
+           if ( iteration == 65 ):
               print " *** COULD NOT CONGERGE TO SOLUTION AFTER 128 BISECTIONS ***"
               sys.exit() 
 
@@ -119,6 +119,17 @@ while (alpha < 1.0):
            filename = "wavefunction_" + str(root) + ".dat"
            filehandle = open(filename,"w")
            filehandle.write(str(u) + " " + str(psi) + "\n");
+
+           x = 0.0
+           oldu = 0.0 
+           u = 0.0
+
+           if ( evenfunction ):
+             psi = 1.0
+             dpsi = 0.0
+           else:
+             psi = 0.0
+             dpsi = 1.0
 
            print "using alpha = " + str(alpha) + " to generate wavefunction plot"
            while ( u < 2.0 ):

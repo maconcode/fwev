@@ -1,5 +1,7 @@
 import math
 import sys
+import time
+start_time = time.time()
 
 m = 9.11e-31     # kilograms
 hbar = 1.0546e-34
@@ -17,7 +19,6 @@ def psiAtTwoU( width, V, h, alpha, evenfunction ):
        psi = 0.0
        dpsi = 1.0
    x = 0.0
-#   oldu = 0.0
    oldu = -h/width
    u = 0.0
 # The next loop propagates the solution of the funtion to u=2 
@@ -31,15 +32,17 @@ def psiAtTwoU( width, V, h, alpha, evenfunction ):
            c = - 2 * m * width**2 * V * alpha / hbar**2
            
        dpsi = dpsi + c * psi * du
-   #    print "psi = " + str(psi) + " newpsi = " + str(psi + dpsi * du)
        psi = psi + dpsi * du
        oldu = u
    return psi
 
 ### Main program starts here
 
-width = 1.0e-9   # meters
+### These should be the only two lines you have to really modify
+
+width = 5.0e-10   # meters
 V = 1.6e-18      # volts
+
 
 alpha = 0.0
 h = 1.0e-15
@@ -101,7 +104,7 @@ while (alpha < 1.0):
            fatB = psi
         
            iteration = 0 
-           bisecth = h / 10
+           bisecth = h / 100
            while ( abs(psi) > 0.00001 and iteration < 65 ):
               iteration = iteration + 1
               half = (A+B)/2
@@ -181,3 +184,7 @@ print " "
 print " *** LINEAR SEARCH DONE ***" 
 print " "
 print " *** PROGRAM COMPLETE ***"
+
+elapsed_time = time.time() - start_time
+print time.strftime(" *** RUN TIME: %H hours, %M minutes, %S seconds", time.gmtime(elapsed_time))
+print " "

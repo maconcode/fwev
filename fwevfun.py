@@ -54,7 +54,11 @@ psi = 0.0
 dpsi = 0.0
 startAlpha = alpha
 
+#This is simply a heading for the program when it runs
+print " "
+print " ==============================================================="
 print " ====  F I N I T E   W E L L   E I G E N F U N C T I O N S  ===="
+print " ==============================================================="
 print " "
 
 # Here we start a big loop to search for roots/solutions

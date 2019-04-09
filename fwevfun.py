@@ -91,7 +91,7 @@ while (alpha < 1.0):
        psi = psiAtTwoU( width, V, h, alpha, evenfunction )
        if ( (psi * oldpsi) < 0.0 ):
            print ("*** FOUND INITIAL  SOLUTION  ***,  alpha =  %18.16f" % alpha)
-           print  "    --> SWITCHING TO BISECTION SEARCH TO IMPROVE SOLUTION <--"
+           print  "    --> SWITCHING TO BISECTION SEARCH TO IMPROVE EIGENVALUE BEFORE PLOTTING EIGENFUNCTION <--"
 
            # improve the solution via 10 bisections
 
@@ -123,6 +123,8 @@ while (alpha < 1.0):
               print " *** TERMINATING PROGRAM EXECUTION ***"
               sys.exit() 
 
+           print "    -- CONVERGENCE CRITERIA MET IN " + str(iteration) + " ITERATIONS ---"
+
            # Now put the wavefunction data in a file
           
            root = root + 1
@@ -138,8 +140,7 @@ while (alpha < 1.0):
              dpsi = 1.0
 
            #print "using alpha = " + str(alpha) + " to generate wavefunction plot"
-           print "    -- CONVERGENCE CRITERIA MET IN " + iteration + " ITERATIONS ---"
-           print "    Writing wavefunction data to file named " + filename
+           print "    Writing eigenfunction data to file named " + filename
            x = 0.0
            u = 0.0
            filehandle.write(str(u) + " " + str(psi) + "\n");
@@ -164,7 +165,7 @@ while (alpha < 1.0):
               pointcount = pointcount + 1
 
            filehandle.close()
-           print  "    Wavefunction data successfully written to " + filename
+           print  "    Eigenfunction data successfully written to " + filename
 
            firstrun = True
            evenfunction = not evenfunction
@@ -176,5 +177,7 @@ while (alpha < 1.0):
    #print "Checking alpha = " + str(alpha)        
    alpha = alpha + delta
 
+print " "
+print " *** LINEAR SEARCH DONE ***" 
 print " "
 print " *** PROGRAM COMPLETE ***"

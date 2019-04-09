@@ -1,4 +1,5 @@
 import math
+import sys
 
 m = 9.11e-31     # kilograms
 hbar = 1.0546e-34
@@ -15,10 +16,9 @@ def psiAtTwoU( width, V, h, alpha, evenfunction ):
    else:
        psi = 0.0
        dpsi = 1.0
-
    x = 0.0
 #   oldu = 0.0
-   oldu = h/width
+   oldu = -h/width
    u = 0.0
 # The next loop propagates the solution of the funtion to u=2 
    while ( u < 2.0 ):
@@ -31,9 +31,12 @@ def psiAtTwoU( width, V, h, alpha, evenfunction ):
            c = - 2 * m * width**2 * V * alpha / hbar**2
            
        dpsi = dpsi + c * psi * du
+   #    print "psi = " + str(psi) + " newpsi = " + str(psi + dpsi * du)
        psi = psi + dpsi * du
        oldu = u
    return psi
+
+### Main program starts here
 
 width = 1.0e-9   # meters
 V = 1.6e-18      # volts
@@ -90,7 +93,7 @@ while (alpha < 1.0):
         
            iteration = 0 
            bisecth = h / 10
-           while ( abs(psi) > 0.000001 ):
+           while ( abs(psi) > 0.00001 and iteration < 128 ):
               iteration = iteration + 1
               half = (A+B)/2
               test = psiAtTwoU( width, V, bisecth, half, evenfunction )
@@ -105,17 +108,16 @@ while (alpha < 1.0):
               alpha = (A+B)/2 
               psi = psiAtTwoU( width, V, bisecth, alpha, evenfunction )
               print( "    -->  improved alpha is %18.16f on iteration %i with psi = %f"  % (alpha, iteration, psi))
-              
+             
+           if ( iteration == 128 ):
+              print " *** COULD NOT CONGERGE TO SOLUTION AFTER 128 BISECTIONS ***"
+              sys.exit() 
 
            # Now put the wavefunction data in a file
-
           
            root = root + 1
            filename = "wavefunction_" + str(root) + ".dat"
            filehandle = open(filename,"w")
-
-
-           
            filehandle.write(str(u) + " " + str(psi) + "\n");
 
            print "using alpha = " + str(alpha) + " to generate wavefunction plot"

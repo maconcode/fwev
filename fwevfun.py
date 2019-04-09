@@ -92,7 +92,7 @@ while (alpha < 1.0):
            fatB = psi
         
            iteration = 0 
-           bisecth = h / 100
+           bisecth = h / 10
            while ( abs(psi) > 0.00001 and iteration < 65 ):
               iteration = iteration + 1
               half = (A+B)/2
@@ -118,11 +118,7 @@ while (alpha < 1.0):
            root = root + 1
            filename = "wavefunction_" + str(root) + ".dat"
            filehandle = open(filename,"w")
-           filehandle.write(str(u) + " " + str(psi) + "\n");
 
-           x = 0.0
-           oldu = 0.0 
-           u = 0.0
 
            if ( evenfunction ):
              psi = 1.0
@@ -132,8 +128,14 @@ while (alpha < 1.0):
              dpsi = 1.0
 
            print "using alpha = " + str(alpha) + " to generate wavefunction plot"
+           x = 0.0
+           u = 0.0
+           filehandle.write(str(u) + " " + str(psi) + "\n");
+           bisecth = h / 10
+           oldu = -bisecth/width
+           pointcount = 0
            while ( u < 2.0 ):
-              x = x + h 
+              x = x + bisecth 
               u = x / width
               du = u - oldu
               if ( abs(u) > 0.5 ):
@@ -143,9 +145,11 @@ while (alpha < 1.0):
            
               dpsi = dpsi + c * psi * du
               psi = psi + dpsi * du
-              filehandle.write(str(u) + " " + str(psi) + "\n");
+              if ( pointcount % 10 == 0):
+                 filehandle.write(str(u) + " " + str(psi) + "\n");
              
               oldu = u
+              pointcount = pointcount + 1
 
            filehandle.close()
 

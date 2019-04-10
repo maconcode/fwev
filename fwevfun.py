@@ -3,9 +3,12 @@ import sys
 import time
 start_time = time.time()
 
+# The mass of the electron and hbar are global variables used in all parts of the
+# code so they are defined here
 m = 9.11e-31     # kilograms
 hbar = 1.0546e-34
 
+# This is the function to return the value of the wavefunction at 2*u
 def psiAtTwoU( width, V, h, alpha, evenfunction ):
 
    psi = 0.0    # I think these have to be here so things scope properly
@@ -34,14 +37,16 @@ def psiAtTwoU( width, V, h, alpha, evenfunction ):
        dpsi = dpsi + c * psi * du
        psi = psi + dpsi * du
        oldu = u
-   return psi
+   return psi    # end of function
 
-### Main program starts here
+################################
+### Main program starts here ###
+################################
 
 ### These should be the only two lines you have to really modify
 
-width = 5.0e-10   # meters
-V = 1.6e-18      # volts
+width = 5.0e-10   # potential width in meters
+V     = 1.6e-18   # potential depth in volts
 
 
 alpha = 0.0
@@ -96,7 +101,8 @@ while (alpha < 1.0):
            print ("*** FOUND INITIAL  SOLUTION  ***,  alpha =  %18.16f" % alpha)
            print  "    --> SWITCHING TO BISECTION SEARCH TO IMPROVE EIGENVALUE BEFORE PLOTTING EIGENFUNCTION <--"
 
-           # improve the solution via 10 bisections
+           # start the bisection algorithm.  For this to work properly
+           # the size of h has to be much smaller 
 
            A = priorAlpha
            B = alpha
@@ -142,7 +148,6 @@ while (alpha < 1.0):
              psi = 0.0
              dpsi = 1.0
 
-           #print "using alpha = " + str(alpha) + " to generate wavefunction plot"
            print "    Writing eigenfunction data to file named " + filename
            x = 0.0
            u = 0.0

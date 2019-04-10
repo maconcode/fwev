@@ -148,7 +148,7 @@ while (alpha < 1.0):
              psi = 0.0
              dpsi = 1.0
 
-           print "    Writing eigenfunction data to file named " + filename
+           print "       Writing eigenfunction plot data to file named " + filename
            x = 0.0
            u = 0.0
            filehandle.write(str(u) + " " + str(psi) + "\n");
@@ -173,7 +173,7 @@ while (alpha < 1.0):
               pointcount = pointcount + 1
 
            filehandle.close()
-           print  "    Eigenfunction data successfully written to " + filename
+           print  "       Plot data successfully written to " + filename
 
            firstrun = True
            evenfunction = not evenfunction

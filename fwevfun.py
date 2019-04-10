@@ -93,13 +93,13 @@ while (alpha < 1.0):
        oldpsi = psiAtTwoU( width, V, h, alpha, evenfunction )
        firstrun = False
        oldalpha = alpha
-       print "*** USING LINEAR SEARCH TO LOCATE NEIGHBORHOOD OF EIGENVALUE  ***"
+       print "*** USING LINEAR SEARCH TO LOCATE NEIGHBORHOOD OF NEXT EIGENVALUE  ***"
    else:
 # if the oldpsi and the new psi are different, we found a solution
        psi = psiAtTwoU( width, V, h, alpha, evenfunction )
        if ( (psi * oldpsi) < 0.0 ):
            print ("*** FOUND INITIAL  SOLUTION  ***,  alpha =  %18.16f" % alpha)
-           print  "    --> SWITCHING TO BISECTION SEARCH TO IMPROVE EIGENVALUE BEFORE PLOTTING EIGENFUNCTION <--"
+           print  "    --> SWITCHING TO BISECTION ALGORITHM TO IMPROVE SOLUTION BEFORE PLOTTING EIGENFUNCTION <--"
 
            # start the bisection algorithm.  For this to work properly
            # the size of h has to be much smaller 
